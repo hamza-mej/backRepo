@@ -16,19 +16,19 @@ class Author
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $lastName;
 
     #[ORM\Column(type: 'text')]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $bibliography;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]

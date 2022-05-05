@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,34 +12,37 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
-#[ApiResource(normalizationContext: ['groups' => ['read']])]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read:book']]
+)]
+#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 class Book
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $title;
 
     #[ORM\Column(type: 'text')]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $description;
 
     #[ORM\Column(type: 'date')]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $publicationDate;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $genre;
 
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups("read")]
+    #[Groups(["read:book"])]
     private $author;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Review::class)]

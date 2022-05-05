@@ -53,17 +53,17 @@ class BookRepository extends ServiceEntityRepository
       * @return Book[] Returns an array of Book objects
       */
 
-    public function getFindBookByAuthor()
-    {
-        return $this->createQueryBuilder('b')
-            ->select('a','b')
-            ->leftJoin('b.author', 'a')
-            ->andWhere('b.id = a.id')
-            ->orderBy('b.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+//    public function getFindBookByAuthor()
+//    {
+//        return $this->createQueryBuilder('b')
+//            ->select('a','b')
+//            ->leftJoin('b.author', 'a')
+//            ->andWhere('b.id = a.id')
+//            ->orderBy('b.id', 'ASC')
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
     /*
     public function findOneBySomeField($value): ?Book
