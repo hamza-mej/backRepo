@@ -13,7 +13,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['read:book']]
+    collectionOperations: [
+        'get',
+        'post' => ['access_control' => 'is_granted("ROLE_USER")'],
+    ],
+    itemOperations: [
+        'get' => ['normalization_context' => ['groups' => 'read:book']],
+        'put' => ['access_control' => 'is_granted("ROLE_USER")'],
+        'delete' => ['access_control' => 'is_granted("ROLE_ADMIN")'],
+    ],
+    normalizationContext: ['groups' => ['read:book']],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 class Book
