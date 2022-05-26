@@ -15,14 +15,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     collectionOperations: [
         'get',
-        'post' => ['access_control' => 'is_granted("ROLE_USER")'],
+        'post',
     ],
     itemOperations: [
-        'get' => ['normalization_context' => ['groups' => 'read:book']],
-        'put' => ['access_control' => 'is_granted("ROLE_USER")'],
-        'delete' => ['access_control' => 'is_granted("ROLE_ADMIN")'],
+        'get' => ['normalization_context' => ['groups' => 'read:book','write:book']],
+        'put',
+        'delete',
     ],
-    normalizationContext: ['groups' => ['read:book']],
+    normalizationContext: ['groups' => ['read:book','write:book']],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 class Book
@@ -30,28 +30,28 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(["read:book"])]
+    #[Groups(["read:book",'write:book'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["read:book"])]
+    #[Groups(["read:book",'write:book'])]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(["read:book"])]
+    #[Groups(["read:book",'write:book'])]
     private $description;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Groups(["read:book"])]
+    #[Groups(["read:book",'write:book'])]
     private $publicationDate;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["read:book"])]
+    #[Groups(["read:book",'write:book'])]
     private $genre;
 
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["read:book"])]
+    #[Groups(["read:book",'write:book'])]
     private $author;
 
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Review::class)]

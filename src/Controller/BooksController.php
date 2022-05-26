@@ -14,6 +14,7 @@ class BooksController extends AbstractController
     #[Route('/booksController', name: 'app_books')]
     public function index(): Response
     {
+       
         return $this->render('books/index.html.twig', [
             'controller_name' => 'ConferenceController',
         ]);
